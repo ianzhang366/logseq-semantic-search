@@ -28,8 +28,13 @@ OUTPUT_DIR = "./_scripts"
 DF_FILE = f"{OUTPUT_DIR}/embeddings.csv"
 CACHE_FILE = f"{OUTPUT_DIR}/query_cache.pkl"
 
-NOTES_ROOT_DIR = "/Users/ianzhang/pnotes"
 
+# CONFIG
+# get the value of an environment variable
+LOGSEQ_NOTES_DIR = os.getenv("LOGSEQ_NOTES_DIR")
+
+if LOGSEQ_NOTES_DIR is None:
+    LOGSEQ_NOTES_DIR = "/Users/ianzhang/pnotes"
 
 ###############
 # OPENAI CODE #
@@ -204,7 +209,7 @@ def ensure_output_dir_exist():
 
 def build_embeddings(df_file=DF_FILE):
     # get all notes
-    notes = read_markdown_notes(NOTES_ROOT_DIR)
+    notes = read_markdown_notes(LOGSEQ_NOTES_DIR)
     # print cost report and confirm
     estimate_cost(notes)
     ensure_output_dir_exist()
@@ -226,7 +231,7 @@ def read_df_file(df_file=DF_FILE) -> pd.DataFrame:
 
 def update_embeddings(df_file=DF_FILE):
     # get all notes
-    notes = read_markdown_notes(NOTES_ROOT_DIR)
+    notes = read_markdown_notes(LOGSEQ_NOTES_DIR)
 
     # read df
     df = read_df_file(df_file)
@@ -393,16 +398,3 @@ if __name__ == "__main__":
     # nmr --update
     # nmr "Weaknesses of OLS regression"
     cli()
-    # note_path = "/Users/ianzhang/pnotes/pages/5g-jarvis.md"
-
-    # notes = {}
-    # sections = extract_sections(note_path)
-    # for section_id, section_contents in sections.items():
-    #     cleaned_txt = clean_section(section_contents)
-    #     if cleaned_txt == "":
-    #         continue
-    #     notes[(note_path, section_id)] = cleaned_txt
-
-    # for k, v in notes.items():
-    #     print("key: {} >> value: {}".format(k, v))
-    # read_markdown_notes(NOTES_ROOT_DIR)
