@@ -1,0 +1,7 @@
+openai
+numpy
+pandas
+tiktoken
+click
+tenacity
+tabulate
