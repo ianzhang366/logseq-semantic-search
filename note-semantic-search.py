@@ -18,7 +18,11 @@ from tabulate import tabulate
 
 
 # CONFIG
-openai.api_key = "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"
+# get the value of an environment variable
+openai_apikey = os.getenv("GPTCOMMIT__OPENAI__API_KEY")
+
+if openai_apikey is not None:
+    openai.api_key = openai_apikey
 
 OUTPUT_DIR = "./_scripts"
 DF_FILE = f"{OUTPUT_DIR}/embeddings.csv"
